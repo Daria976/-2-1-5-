@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-depvis_stage2.py
-Этап 2: Сбор данных о зависимостях пакетов Alpine (apk).
-"""
 import argparse
 import xml.etree.ElementTree as ET
 import os
@@ -21,22 +16,15 @@ def load_config(xml_path: str):
     return cfg
 
 def download_apkindex(repo_url: str) -> bytes:
-    """
-    Скачивает APKINDEX.tar.gz из указанного репозитория.
-    Пример URL: https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/
-    """
+    
     if not repo_url.endswith("/"):
         repo_url += "/"
     url = repo_url + "APKINDEX.tar.gz"
-    print(f"→ Скачиваем индекс: {url}")
+    print(f"Скачиваем индекс: {url}")
     with urllib.request.urlopen(url) as r:
         return r.read()
 
 def parse_apkindex(data: bytes):
-    """
-    Распаковывает APKINDEX.tar.gz и извлекает записи пакетов.
-    Возвращает словарь: {pkgname: {'version': ..., 'depends': [...]}}
-    """
     packages = {}
     with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar:
         for member in tar.getmembers():
@@ -79,23 +67,23 @@ def main():
     version = cfg.get("package_version")
 
     if not package or not repo:
-        print("❌ Укажите package и repository в config.xml")
+        print("Укажите package и repository в config.xml")
         sys.exit(2)
 
     try:
         raw_data = download_apkindex(repo)
     except Exception as e:
-        print(f"❌ Не удалось скачать APKINDEX: {e}")
+        print(f"Не удалось скачать APKINDEX: {e}")
         sys.exit(3)
 
     try:
         packages = parse_apkindex(raw_data)
     except Exception as e:
-        print(f"❌ Ошибка при разборе APKINDEX: {e}")
+        print(f"Ошибка при разборе APKINDEX: {e}")
         sys.exit(4)
 
     if package not in packages:
-        print(f"⚠️ Пакет {package} не найден в репозитории")
+        print(f"Пакет {package} не найден в репозитории")
         sys.exit(0)
 
     pkginfo = packages[package]
@@ -106,7 +94,6 @@ def main():
     for dep in deps:
         print(f"  - {dep}")
 
-    # (опционально) сохранить вывод в файл
     with open(f"{package}_deps.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(deps))
 

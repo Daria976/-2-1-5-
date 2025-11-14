@@ -2,13 +2,6 @@ import argparse
 from collections import deque, defaultdict
 
 def load_graph(file_path: str):
-    """
-    Загружает граф зависимостей из файла.
-    Формат файла:
-        A: B C
-        B: C
-        C:
-    """
     graph = defaultdict(list)
     with open(file_path, "r", encoding="utf-8") as f:
         for line in f:
@@ -23,9 +16,6 @@ def load_graph(file_path: str):
 
 
 def bfs_dependencies(graph, start):
-    """
-    Строит граф зависимостей алгоритмом BFS без рекурсии.
-    """
     visited = set()
     queue = deque([start])
     order = []
@@ -44,9 +34,6 @@ def bfs_dependencies(graph, start):
 
 
 def detect_cycles(graph):
-    """
-    Проверяет наличие циклических зависимостей.
-    """
     visited = set()
     stack = set()
 
@@ -82,14 +69,13 @@ def main():
         print(f"{k}: {', '.join(v) if v else '-'}")
 
     if detect_cycles(graph):
-        print("\n⚠ Обнаружены циклические зависимости!")
+        print("\nОбнаружены циклические зависимости!")
     else:
-        print("\n✅ Циклические зависимости отсутствуют.")
+        print("\nЦиклические зависимости отсутствуют.")
 
     deps = bfs_dependencies(graph, args.start)
     print(f"\nПорядок обхода зависимостей для {args.start}:")
     print(" → ".join(deps))
-        # Сохраняем результат обхода в файл
     with open("bash_deps.txt", "w", encoding="utf-8") as f:
         f.write(f"Результат обхода зависимостей от {args.start}:\n")
         f.write(" -> ".join(deps))
