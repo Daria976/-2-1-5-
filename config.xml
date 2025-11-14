@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <package>bash</package>
+  <repository>https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/</repository>
+  <repo_mode>apk</repo_mode>
+  <package_version>5.2.15-r0</package_version>
+  <output_mode>direct_deps</output_mode>
+</config>

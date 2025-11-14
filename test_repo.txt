@@ -1,0 +1,6 @@
+my-package: libA, libB
+libA: libC
+libB: libC, libD
+libC:
+libD: libE
+libE:
