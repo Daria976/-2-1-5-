@@ -1,6 +1,7 @@
 # -2-1-5-
-//Этап 1 — Загрузка графа зависимостей
-//depvis_stage1.py
+# Этап 1 — Загрузка графа зависимостей
+# depvis_stage1.py
+
 import argparse
 import xml.etree.ElementTree as ET
 import os
@@ -193,22 +194,23 @@ def main():
 if __name__ == "__main__":
     main()
 
-//Вывод программы:
-=== ASCII Dependency Tree ===
-my-package
-   ├─ libA
-   │  └─ libC
-   └─ libB
-      ├─ libC
-      │  (cycle detected)
-      └─ libD
-         └─ libE
-=== End ===
+# Вывод программы:
+# === ASCII Dependency Tree ===
+# my-package
+#    ├─ libA
+#    │  └─ libC
+#    └─ libB
+#       ├─ libC
+#       │  (cycle detected)
+#       └─ libD
+#          └─ libE
+# === End ===
 
 
 
-//Этап 2 — Поиск зависимостей
-//depvis_stage2.py
+# Этап 2 — Поиск зависимостей
+# depvis_stage2.py
+
 import argparse
 import xml.etree.ElementTree as ET
 import os
@@ -314,23 +316,23 @@ if __name__ == "__main__":
     main()
 
     
-//Вывод программы:
-Скачиваем индекс: https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz
+# Вывод программы:
+# Скачиваем индекс: https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz
 
-Пакет: bash
-Версия: 5.2.15-r5
-Прямые зависимости (3):
-  - /bin/sh
-  - so:libc.musl-x86_64.so.1
-  - so:libreadline.so.8
+# Пакет: bash
+# Версия: 5.2.15-r5
+# Прямые зависимости (3):
+#   - /bin/sh
+#   - so:libc.musl-x86_64.so.1
+#   - so:libreadline.so.8
 
-Список зависимостей сохранён в bash_deps.txt
-
-
+# Список зависимостей сохранён в bash_deps.txt
 
 
-//Этап 3 — Визуализация в Graphviz
-//depvis_stage3.py
+
+
+# Этап 3 — Визуализация в Graphviz
+# depvis_stage3.py
 
 import argparse
 from collections import deque, defaultdict
@@ -418,25 +420,26 @@ if __name__ == "__main__":
     main()
 
 
-//Вывод программы:
-Граф зависимостей:
-A: B, C
-B: D
-C: D, E
-D: E
-E: -
+# Вывод программы:
+# Граф зависимостей:
+# A: B, C
+# B: D
+# C: D, E
+# D: E
+# E: -
 
-Циклические зависимости отсутствуют.
+# Циклические зависимости отсутствуют.
 
-Порядок обхода зависимостей для A:
-A → B → C → D → E
+# Порядок обхода зависимостей для A:
+# A → B → C → D → E
 
-Результат сохранён в bash_deps.txt
+# Результат сохранён в bash_deps.txt
 
 
 
-//Этап 4 — ASCII-граф
-//depvis_stage4.py
+# Этап 4 — ASCII-граф
+# depvis_stage4.py
+
 import argparse
 from collections import deque
 
@@ -501,25 +504,25 @@ def main():
 if __name__ == "__main__":
     main()
 
-//Вывод программы:
-Загруженный граф зависимостей:
-A: B C
-B: D
-C: D E
-D: E
-E:
+# Вывод программы:
+# Загруженный граф зависимостей:
+# A: B C
+# B: D
+# C: D E
+# D: E
+# E:
 
-Режим: обратные зависимости
+# Режим: обратные зависимости
 
-Порядок обхода зависимостей для E:
-E → C → D → A → B
+# Порядок обхода зависимостей для E:
+# E → C → D → A → B
 
-Результат сохранён в bash_deps.txt
+# Результат сохранён в bash_deps.txt
 
 
 
-//Этап 5 — Полноценная CLI-утилита
-//depvis_stage5.py
+# Этап 5 — Полноценная CLI-утилита
+# depvis_stage5.py
 
 import argparse
 from collections import deque
@@ -615,20 +618,19 @@ if __name__ == "__main__":
     main()
 
     
+# Вывод программы:
+# Загруженный граф зависимостей:
+# A: B C
+# B: D
+# C: D E
+# D:
+# E:
 
-//Вывод программы:
-Загруженный граф зависимостей:
-A: B C
-B: D
-C: D E
-D:
-E:
+# Режим: прямые зависимости
 
-Режим: прямые зависимости
+# Порядок обхода зависимостей для A:
+# A → B → C → D → E
 
-Порядок обхода зависимостей для A:
-A → B → C → D → E
+# Файл визуализации сохранён как dependency_graph.png
 
-Файл визуализации сохранён как dependency_graph.png
-
-Результат сохранён в bash_deps.txt
+# Результат сохранён в bash_deps.txt
